@@ -11,7 +11,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
-//Movie struct and it is expandable in future as per requirement
+// Movie struct and it is expandable in future as per requirement
 type Movie struct {
 	ID       string    `json:"id"`
 	Isbn     string    `json:"isbn"`
@@ -19,7 +19,7 @@ type Movie struct {
 	Director *Director `json:"director"`
 }
 
-//Director struct is child struct of parent Movie struct
+// Director struct is child struct of parent Movie struct
 type Director struct {
 	Firstname string `json:"firstname"`
 	Lastname  string `json:"lastname"`
@@ -31,24 +31,25 @@ func main() {
 	r := mux.NewRouter()
 
 	//Sample data entered into slice of movies
-	movies = append(movies, Movie{
-		ID:    "1",
-		Isbn:  "55645",
-		Title: "One Movie",
-		Director: &Director{
-			Firstname: "John",
-			Lastname:  "Doe",
-		},
-	})
-	movies = append(movies, Movie{
-		ID:    "2",
-		Isbn:  "47498",
-		Title: "Two Movie",
-		Director: &Director{
-			Firstname: "Jane",
-			Lastname:  "Doe",
-		},
-	})
+	//Uncomment the below sample data if needed to test the CRUD logic
+	// movies = append(movies, Movie{
+	// 	ID:    "1",
+	// 	Isbn:  "55645",
+	// 	Title: "One Movie",
+	// 	Director: &Director{
+	// 		Firstname: "John",
+	// 		Lastname:  "Doe",
+	// 	},
+	// })
+	// movies = append(movies, Movie{
+	// 	ID:    "2",
+	// 	Isbn:  "47498",
+	// 	Title: "Two Movie",
+	// 	Director: &Director{
+	// 		Firstname: "Jane",
+	// 		Lastname:  "Doe",
+	// 	},
+	// })
 
 	//routes for crud movie api's
 	r.HandleFunc("/movies", getMovies).Methods("GET")
@@ -61,13 +62,13 @@ func main() {
 	log.Fatal(http.ListenAndServe(":8080", r))
 }
 
-//Gets all the list of movies available in []Movie
+// Gets all the list of movies available in []Movie
 func getMovies(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(movies)
 }
 
-//Delete the movie based on the id passed from the []Movie
+// Delete the movie based on the id passed from the []Movie
 func deleteMovie(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	params := mux.Vars(r)
@@ -80,7 +81,7 @@ func deleteMovie(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(movies)
 }
 
-//Get the movie based on the id passed form the []Movie
+// Get the movie based on the id passed form the []Movie
 func getMovie(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	params := mux.Vars(r)
@@ -92,7 +93,7 @@ func getMovie(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-//Create a new movie and append it to []Movie
+// Create a new movie and append it to []Movie
 func createMovie(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	var movie Movie
@@ -103,7 +104,7 @@ func createMovie(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
-//Update the movie entry in the []Movie
+// Update the movie entry in the []Movie
 func updateMovie(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	params := mux.Vars(r)
